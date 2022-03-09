@@ -58,6 +58,8 @@ class SpeedDial extends StatefulWidget {
   /// The active icon of the main button, Defaults to icon if not specified, ignored if [animatedIcon] is non [null].
   final IconData? activeIcon;
 
+  final Widget? activeIconWidget;
+
   /// If true then rotation animation will be used when animating b/w activeIcon and icon.
   final bool useRotationAnimation;
 
@@ -178,6 +180,7 @@ class SpeedDial extends StatefulWidget {
     this.spaceBetweenChildren,
     this.spacing,
     this.offset,
+    this.activeIconWidget,
   }) : super(key: key);
 
   @override
@@ -360,7 +363,7 @@ class _SpeedDialState extends State<SpeedDial>
                               child: widget.activeChild ??
                                   Container(
                                     child: Center(
-                                      child: Icon(
+                                      child: widget.activeIconWidget ?? Icon(
                                         widget.activeIcon,
                                         key: const ValueKey<int>(1),
                                         color: widget.iconTheme?.color,
