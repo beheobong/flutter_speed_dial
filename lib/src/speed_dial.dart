@@ -105,6 +105,7 @@ class SpeedDial extends StatefulWidget {
 
   /// Add a space at between speed dial and children
   final double? spacing;
+  final Offset? offset;
 
   /// Add a space between each children
   final double? spaceBetweenChildren;
@@ -176,6 +177,7 @@ class SpeedDial extends StatefulWidget {
     this.childPadding = const EdgeInsets.symmetric(vertical: 5),
     this.spaceBetweenChildren,
     this.spacing,
+    this.offset,
   }) : super(key: key);
 
   @override
@@ -552,32 +554,39 @@ class _ChildrensOverlayState extends State<_ChildrensOverlay> {
                       : widget.widget.direction.isRight
                           ? Alignment.centerLeft
                           : Alignment.center,
-          offset: widget.widget.direction.isDown
-              ? Offset(
-                  (widget.widget.switchLabelPosition ||
-                              widget.dialKey.globalPaintBounds == null
-                          ? 0
-                          : widget.dialKey.globalPaintBounds!.size.width) +
-                      max(widget.widget.childrenButtonSize.height - 56, 0) / 2,
-                  widget.dialKey.globalPaintBounds!.size.height)
-              : widget.widget.direction.isUp
+          offset: widget.widget.offset ??
+              (widget.widget.direction.isDown
                   ? Offset(
                       (widget.widget.switchLabelPosition ||
                                   widget.dialKey.globalPaintBounds == null
                               ? 0
                               : widget.dialKey.globalPaintBounds!.size.width) +
-                          max(widget.widget.childrenButtonSize.width - 56, 0) /
+                          max(widget.widget.childrenButtonSize.height - 56, 0) /
                               2,
-                      0)
-                  : widget.widget.direction.isLeft
-                      ? Offset(-10.0,
-                          widget.dialKey.globalPaintBounds!.size.height / 2)
-                      : widget.widget.direction.isRight ||
-                              widget.dialKey.globalPaintBounds == null
-                          ? Offset(
-                              widget.dialKey.globalPaintBounds!.size.width + 12,
+                      widget.dialKey.globalPaintBounds!.size.height)
+                  : widget.widget.direction.isUp
+                      ? Offset(
+                          (widget.widget.switchLabelPosition ||
+                                      widget.dialKey.globalPaintBounds == null
+                                  ? 0
+                                  : widget
+                                      .dialKey.globalPaintBounds!.size.width) +
+                              max(widget.widget.childrenButtonSize.width - 56,
+                                      0) /
+                                  2,
+                          0)
+                      : widget.widget.direction.isLeft
+                          ? Offset(-10.0,
                               widget.dialKey.globalPaintBounds!.size.height / 2)
-                          : const Offset(-10.0, 0.0),
+                          : widget.widget.direction.isRight ||
+                                  widget.dialKey.globalPaintBounds == null
+                              ? Offset(
+                                  widget.dialKey.globalPaintBounds!.size.width +
+                                      12,
+                                  widget.dialKey.globalPaintBounds!.size
+                                          .height /
+                                      2)
+                              : const Offset(-10.0, 0.0)),
           link: widget.layerLink,
           showWhenUnlinked: false,
           child: Material(
